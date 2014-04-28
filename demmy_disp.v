@@ -81,29 +81,29 @@ always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
 
         // Reset
         state <= 8'b0;
-        process <= 3'b0;
+        process <= 2'b00;
         char <= 8'b0;
         clock_count <= 32'b0;
 
     end else begin
         case (process) begin
-            3'd1: begin
+            2'b01: begin
                 // Enable command
                 LCD_E <= TRUE;
-                process <= 3'd2;
+                process <= 2'b10;
             end
-            3'd2: begin
+            2'b10: begin
                 if (clock_count == LCD_COMMAND_WAIT) begin
                     // Disenable command
                     LCD_E <= FALSE;
-                    process <= 3'd3;
+                    process <= 2'b11;
                     clock_count <= 32'b0;
                 end
             end
-            3'd3: begin
+            2'b11: begin
                 if (clock_count == LCD_CONFIG_WAIT) begin
                     // Go to next command or wait
-                    process <= 3'd0;
+                    process <= 2'b00;
                     clock_count <= 32'b0;
                 end
             end
@@ -112,7 +112,7 @@ always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
                     // Wait finished
                     clock_count <= 32'b0;
                     state <= state_transition(state);
-                    process <= 3'd1;
+                    process <= 2'b01;
                 end
             end
         end
