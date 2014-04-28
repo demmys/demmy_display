@@ -32,7 +32,8 @@ module demmy_disp # (
     parameter FUNCTION_SET_CMD = 8'h38,
     parameter ENTRY_MODE_CMD = 8'h06,
     parameter DISPLAY_CONTROL_CMD = 8'h0c,
-    parameter DISPLAY_CLEAR_CMD = 8'h01
+    parameter DISPLAY_CLEAR_CMD = 8'h01,
+    parameter SET_DD_RAM_ADDRESS = 8'h80
 ) (
     // Clock
     input CLK_50MHZ,
@@ -52,7 +53,6 @@ module demmy_disp # (
 // Register
 reg [7:0] state;
 reg [1:0] process;
-reg [7:0] char;
 reg [31:0] clock_count;
 reg [31:0] wait_time;
 
@@ -66,7 +66,7 @@ function [7:0] state_transition;
             // Infinity roop
             8'hfe: state_transition = state;
             // Final state
-            8'h07: state_transition = 8'h07;
+            8'h10: state_transition = 8'hfe;
             // Transition
             default: state_transition = state + 8'b1;
         end
@@ -82,7 +82,6 @@ always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
         // Reset
         state <= 8'b0;
         process <= 2'b00;
-        char <= 8'b0;
         clock_count <= 32'b0;
 
     end else begin
@@ -127,7 +126,6 @@ end
 
 // Main routine
 //     - set module output signal
-//     - set char
 //     - set wait_time
 always @(state) begin
     case (state) begin
@@ -167,6 +165,21 @@ always @(state) begin
         8'h07: begin
             LCD_DB <= DISPLAY_CLEAR_CMD;
             wait_time <= LCD_PREPARE_WAIT;
+        end
+        // Display characters
+        8'h08: begin
+            LCD_DB <= SET_DD_RAM_ADDRESS | 8'h00;
+            wait_time <= NO_WAIT;
+        end
+        8'h09: begin
+            LCD_RS <= TRUE;
+            // D
+            LCD_DB <= 8'h44; 
+            wait_time <= NO_WAIT;
+        end
+        8'h10: begin
+            LCD_RS <= FALSE;
+            wait_time <= NO_WAIT;
         end
     end
 end
