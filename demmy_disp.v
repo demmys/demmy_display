@@ -49,16 +49,12 @@ module demmy_disp # (
 
 
 
-// State register
+// Register
 reg [7:0] state;
-// Command state register
-reg [1:0] command;
-// Character register
+reg [1:0] process;
 reg [7:0] char;
-// Clock counter
 reg [31:0] clock_count;
-// Wait dist time
-reg [31:0] dist_time;
+reg [31:0] wait_time;
 
 
 
@@ -79,49 +75,49 @@ endfunction
 
 
 
-// Reset, wait or command routine
+// Reset, consume process or wait routine
 always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
     if (BTN_SOUTH == TRUE) begin
 
         // Reset
         state <= 8'b0;
-        command <= 3'b0;
+        process <= 3'b0;
         char <= 8'b0;
         clock_count <= 32'b0;
 
     end else begin
-        case (command) begin
-
-            // Command routine
+        case (process) begin
             3'd1: begin
+                // Enable command
                 LCD_E <= TRUE;
-                command <= 3'd2;
+                process <= 3'd2;
             end
             3'd2: begin
                 if (clock_count == LCD_COMMAND_WAIT) begin
+                    // Disenable command
                     LCD_E <= FALSE;
-                    command <= 3'd3;
+                    process <= 3'd3;
                     clock_count <= 32'b0;
                 end
             end
             3'd3: begin
                 if (clock_count == LCD_CONFIG_WAIT) begin
-                    command <= 3'd0;
+                    // Go to next command or wait
+                    process <= 3'd0;
                     clock_count <= 32'b0;
                 end
             end
-
-            // Wait routine
             default: begin
-                if (dist_time > 0 && clock_count == dist_time) begin
+                if (wait_time > 0 && clock_count == wait_time) begin
                     // Wait finished
                     clock_count <= 32'b0;
                     state <= state_transition(state);
+                    process <= 3'd1;
                 end
             end
-
         end
 
+        // Wait
         clock_count <= clock_count + 32'b1;
 
     end
@@ -132,8 +128,7 @@ end
 // Main routine
 //     - set module output signal
 //     - set char
-//     - set command state
-//     - set dist_time
+//     - set wait_time
 always @(state) begin
     case (state) begin
         // LCD Initialize
@@ -142,44 +137,36 @@ always @(state) begin
             LCD_E <= FALSE;
             LCD_RS <= FALSE;
             LCD_RW <= FALSE;
-            command <= 3'd0;
-            dist_time <= FPGA_CONFIG_WAIT;
+            wait_time <= FPGA_CONFIG_WAIT;
         end
         8'h01: begin
             LCD_DB <= ENABLE_8BIT_CMD;
-            command <= 3'd1;
-            dist_time <= ENABLE_8BIT_WAIT_1;
+            wait_time <= ENABLE_8BIT_WAIT_1;
         end
         8'h02: begin
             LCD_DB <= ENABLE_8BIT_CMD;
-            command <= 3'd1;
-            dist_time <= ENABLE_8BIT_WAIT_2;
+            wait_time <= ENABLE_8BIT_WAIT_2;
         end
         8'h03: begin
             LCD_DB <= ENABLE_8BIT_CMD;
-            command <= 3'd1;
-            dist_time <= NO_WAIT;
+            wait_time <= NO_WAIT;
         end
         // LCD configuration
         8'h04: begin
             LCD_DB <= FUNCTION_SET_CMD;
-            command <= 3'd1;
-            dist_time <= NO_WAIT;
+            wait_time <= NO_WAIT;
         end
         8'h05: begin
             LCD_DB <= ENTRY_MODE_CMD;
-            command <= 3'd1;
-            dist_time <= NO_WAIT;
+            wait_time <= NO_WAIT;
         end
         8'h06: begin
             LCD_DB <= DISPLAY_CONTROL_CMD;
-            command <= 3'd1;
-            dist_time <= NO_WAIT;
+            wait_time <= NO_WAIT;
         end
         8'h07: begin
             LCD_DB <= DISPLAY_CLEAR_CMD;
-            command <= 3'd1;
-            dist_time <= LCD_PREPARE_WAIT;
+            wait_time <= LCD_PREPARE_WAIT;
         end
     end
 end
