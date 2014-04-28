@@ -17,8 +17,8 @@
 
 
 module demmy_disp # (
-    parameter TRUE = 1'b1;
-    parameter FALSE = 1'b0;
+    parameter TRUE = 1'b1,
+    parameter FALSE = 1'b0,
     // Wait time
     parameter NO_WAIT = 32'd1,
     parameter FPGA_CONFIG_WAIT = 32'd750000,
@@ -62,14 +62,14 @@ reg [31:0] wait_time;
 function [7:0] state_transition;
     input [7:0] state;
     begin
-        case (state) begin
+        case (state)
             // Infinity roop
             8'hfe: state_transition = state;
             // Final state
             8'h10: state_transition = 8'hfe;
             // Transition
             default: state_transition = state + 8'b1;
-        end
+        endcase
     end
 endfunction
 
@@ -85,7 +85,7 @@ always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
         clock_count <= 32'b0;
 
     end else begin
-        case (process) begin
+        case (process)
             2'b01: begin
                 // Enable command
                 LCD_E <= TRUE;
@@ -114,7 +114,7 @@ always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
                     process <= 2'b01;
                 end
             end
-        end
+        endcase
 
         // Wait
         clock_count <= clock_count + 32'b1;
@@ -128,7 +128,7 @@ end
 //     - set module output signal
 //     - set wait_time
 always @(state) begin
-    case (state) begin
+    case (state)
         // LCD Initialize
         8'h00: begin
             LCD_DB <= 8'b0;
@@ -181,7 +181,7 @@ always @(state) begin
             LCD_RS <= FALSE;
             wait_time <= NO_WAIT;
         end
-    end
+    endcase
 end
 
 
@@ -190,7 +190,7 @@ end
 always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
     if (BTN_SOUTH == TRUE) begin
         LED <= 8'hff;
-    end else
+    end else begin
         LED <= state;
     end
 end
