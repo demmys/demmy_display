@@ -50,7 +50,19 @@ module demmy_disp # (
 
 
 
-// Register
+// Output register
+reg [7:0] lcd_db;
+assign LCD_DB = lcd_db;
+reg lcd_e;
+assign LCD_E = lcd_e;
+reg lcd_rs;
+assign LCD_RS = lcd_rs;
+reg lcd_rw;
+assign LCD_RW = lcd_rw;
+reg [7:0] led;
+assign LED = led;
+
+// Internal register
 reg [7:0] state;
 reg [1:0] process;
 reg [31:0] clock_count;
@@ -83,18 +95,20 @@ always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
         state <= 8'b0;
         process <= 2'b00;
         clock_count <= 32'b0;
+        lcd_e <= FALSE;
+        lcd_rw <= FALSE;
 
     end else begin
         case (process)
             2'b01: begin
                 // Enable command
-                LCD_E <= TRUE;
+                lcd_e <= TRUE;
                 process <= 2'b10;
             end
             2'b10: begin
                 if (clock_count == LCD_COMMAND_WAIT) begin
                     // Disenable command
-                    LCD_E <= FALSE;
+                    lcd_e <= FALSE;
                     process <= 2'b11;
                     clock_count <= 32'b0;
                 end
@@ -131,54 +145,52 @@ always @(state) begin
     case (state)
         // LCD Initialize
         8'h00: begin
-            LCD_DB <= 8'b0;
-            LCD_E <= FALSE;
-            LCD_RS <= FALSE;
-            LCD_RW <= FALSE;
+            lcd_db <= 8'b0;
+            lcd_rs <= FALSE;
             wait_time <= FPGA_CONFIG_WAIT;
         end
         8'h01: begin
-            LCD_DB <= ENABLE_8BIT_CMD;
+            lcd_db <= ENABLE_8BIT_CMD;
             wait_time <= ENABLE_8BIT_WAIT_1;
         end
         8'h02: begin
-            LCD_DB <= ENABLE_8BIT_CMD;
+            lcd_db <= ENABLE_8BIT_CMD;
             wait_time <= ENABLE_8BIT_WAIT_2;
         end
         8'h03: begin
-            LCD_DB <= ENABLE_8BIT_CMD;
+            lcd_db <= ENABLE_8BIT_CMD;
             wait_time <= NO_WAIT;
         end
         // LCD configuration
         8'h04: begin
-            LCD_DB <= FUNCTION_SET_CMD;
+            lcd_db <= FUNCTION_SET_CMD;
             wait_time <= NO_WAIT;
         end
         8'h05: begin
-            LCD_DB <= ENTRY_MODE_CMD;
+            lcd_db <= ENTRY_MODE_CMD;
             wait_time <= NO_WAIT;
         end
         8'h06: begin
-            LCD_DB <= DISPLAY_CONTROL_CMD;
+            lcd_db <= DISPLAY_CONTROL_CMD;
             wait_time <= NO_WAIT;
         end
         8'h07: begin
-            LCD_DB <= DISPLAY_CLEAR_CMD;
+            lcd_db <= DISPLAY_CLEAR_CMD;
             wait_time <= LCD_PREPARE_WAIT;
         end
         // Display characters
         8'h08: begin
-            LCD_DB <= SET_DD_RAM_ADDRESS | 8'h00;
+            lcd_db <= SET_DD_RAM_ADDRESS | 8'h00;
             wait_time <= NO_WAIT;
         end
         8'h09: begin
-            LCD_RS <= TRUE;
+            lcd_rs <= TRUE;
             // D
-            LCD_DB <= 8'h44; 
+            lcd_db <= 8'h44; 
             wait_time <= NO_WAIT;
         end
         8'h10: begin
-            LCD_RS <= FALSE;
+            lcd_rs <= FALSE;
             wait_time <= NO_WAIT;
         end
     endcase
@@ -189,9 +201,9 @@ end
 // Debug routine
 always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
     if (BTN_SOUTH == TRUE) begin
-        LED <= 8'hff;
+        led <= 8'hff;
     end else begin
-        LED <= state;
+        led <= state;
     end
 end
 

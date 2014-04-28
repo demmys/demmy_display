@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/demmys/Documents/demmy_disp/demmy_disp.ncd
+OUTFILE=/home/demmys/Documents/demmy_disp/demmy_disp.bit
+FAMILY=Spartan3A and Spartan3AN
+PART=xc3s700an-4fgg484
+WORKINGDIR=/home/demmys/Documents/demmy_disp
+LICENSE=WebPack
+USER_INFO=210882713_0_0_310
