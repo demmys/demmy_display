@@ -19,13 +19,14 @@
 module demmy_disp # (
     parameter TRUE = 1'b1,
     parameter FALSE = 1'b0,
+    parameter FINAL_STATE = 8'h09,
     // Wait time
     parameter NO_WAIT = 32'd1,
     parameter FPGA_CONFIG_WAIT = 32'd750000,
     parameter LCD_COMMAND_WAIT = 32'd12,
     parameter LCD_CONFIG_WAIT = 32'd2000,
-    parameter ENABLE_8BIT_WAIT_1 = 32'd205000 - LCD_CONFIG_WAIT,
-    parameter ENABLE_8BIT_WAIT_2 = 32'd5000 - LCD_CONFIG_WAIT,
+    parameter ENABLE_8BIT_WAIT_1 = 32'd205000,
+    parameter ENABLE_8BIT_WAIT_2 = 32'd5000,
     parameter LCD_PREPARE_WAIT = 32'd82000,
     // LCD command
     parameter ENABLE_8BIT_CMD = 8'h38,
@@ -74,14 +75,10 @@ reg [31:0] wait_time;
 function [7:0] state_transition;
     input [7:0] state;
     begin
-        case (state)
-            // Infinity roop
-            8'hfe: state_transition = state;
-            // Final state
-            8'h10: state_transition = 8'hfe;
-            // Transition
-            default: state_transition = state + 8'b1;
-        endcase
+        if (state == FINAL_STATE)
+            state_transition = FINAL_STATE;
+        else
+            state_transition = state + 8'b1;
     end
 endfunction
 
@@ -102,8 +99,11 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
         case (process)
             2'b01: begin
                 // Enable command
-                lcd_e <= TRUE;
-                process <= 2'b10;
+                if (clock_count == 32'd1) begin
+                    lcd_e <= TRUE;
+                    process <= 2'b10;
+                    clock_count <= 32'b0;
+                end else clock_count <= clock_count + 32'b1;
             end
             2'b10: begin
                 if (clock_count == LCD_COMMAND_WAIT) begin
@@ -111,28 +111,26 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
                     lcd_e <= FALSE;
                     process <= 2'b11;
                     clock_count <= 32'b0;
-                end
+                end else clock_count <= clock_count + 32'b1;
             end
             2'b11: begin
                 if (clock_count == LCD_CONFIG_WAIT) begin
                     // Go to next command or wait
+                    lcd_e <= FALSE;
                     process <= 2'b00;
                     clock_count <= 32'b0;
-                end
+                end else clock_count <= clock_count + 32'b1;
             end
             default: begin
                 if (wait_time > 0 && clock_count == wait_time) begin
                     // Wait finished
-                    clock_count <= 32'b0;
                     state <= state_transition(state);
-                    process <= 2'b01;
-                end
+                    lcd_e <= FALSE;
+                    process <= state == FINAL_STATE ? 2'b00 : 2'b01;
+                    clock_count <= 32'b0;
+                end else clock_count <= clock_count + 32'b1;
             end
         endcase
-
-        // Wait
-        clock_count <= clock_count + 32'b1;
-
     end
 end
 
@@ -197,11 +195,6 @@ always @(state) begin
             lcd_db <= 8'h44; 
             wait_time <= NO_WAIT;
         end
-        8'h10: begin
-            lcd_rs <= FALSE;
-            lcd_db <= 8'hxx; 
-            wait_time <= NO_WAIT;
-        end
         default: begin
             lcd_rs <= FALSE;
             lcd_db <= 8'hxx; 
@@ -217,7 +210,7 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
     if (BUTTON_SOUTH == TRUE) begin
         debug_disp <= 8'hff;
     end else begin
-        debug_disp <= state;
+        debug_disp <= { process, state[5:0] };
     end
 end
 
