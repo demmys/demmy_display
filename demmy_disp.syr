@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: demmy_disp.prj
@@ -117,21 +117,27 @@ Analysis of file <"demmy_disp.prj"> succeeded.
 *                     Design Hierarchy Analysis                         *
 =========================================================================
 Analyzing hierarchy for module <demmy_disp> in library <work> with parameters.
+	CHAR_WRITE_STATE = "00001001"
+	CURSOR_AND_DISPLAY_SHIFT = "00011000"
 	DISPLAY_CLEAR_CMD = "00000001"
 	DISPLAY_CONTROL_CMD = "00001100"
+	DISPLAY_SHIFT_STATE = "00001010"
 	ENABLE_8BIT_CMD = "00111000"
 	ENABLE_8BIT_WAIT_1 = "00000000000000110001100011111000"
 	ENABLE_8BIT_WAIT_2 = "00000000000000000000101110111000"
-	ENTRY_MODE_CMD = "00000110"
+	ENTRY_MODE_CMD = "00000111"
 	FALSE = "0"
-	FINAL_STATE = "00001001"
 	FPGA_CONFIG_WAIT = "00000000000010110111000110110000"
 	FUNCTION_SET_CMD = "00111000"
 	LCD_COMMAND_WAIT = "00000000000000000000000000001100"
 	LCD_CONFIG_WAIT = "00000000000000000000011111010000"
 	LCD_PREPARE_WAIT = "00000000000000010100000001010000"
 	NO_WAIT = "00000000000000000000000000000001"
+	SENTENCE = "Demmy's desk!!"
+	SENTENCE_LENGTH = "001110"
 	SET_DD_RAM_ADDRESS = "10000000"
+	STOP_AND_SHOW_STATE = "00001011"
+	STOP_AND_SHOW_WAIT = "00000001011111010111100001000000"
 	TRUE = "1"
 
 
@@ -139,23 +145,30 @@ Analyzing hierarchy for module <demmy_disp> in library <work> with parameters.
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing top module <demmy_disp>.
+	CHAR_WRITE_STATE = 8'b00001001
+	CURSOR_AND_DISPLAY_SHIFT = 8'b00011000
 	DISPLAY_CLEAR_CMD = 8'b00000001
 	DISPLAY_CONTROL_CMD = 8'b00001100
+	DISPLAY_SHIFT_STATE = 8'b00001010
 	ENABLE_8BIT_CMD = 8'b00111000
 	ENABLE_8BIT_WAIT_1 = 32'b00000000000000110001100011111000
 	ENABLE_8BIT_WAIT_2 = 32'b00000000000000000000101110111000
-	ENTRY_MODE_CMD = 8'b00000110
+	ENTRY_MODE_CMD = 8'b00000111
 	FALSE = 1'b0
-	FINAL_STATE = 8'b00001001
 	FPGA_CONFIG_WAIT = 32'b00000000000010110111000110110000
 	FUNCTION_SET_CMD = 8'b00111000
 	LCD_COMMAND_WAIT = 32'b00000000000000000000000000001100
 	LCD_CONFIG_WAIT = 32'b00000000000000000000011111010000
 	LCD_PREPARE_WAIT = 32'b00000000000000010100000001010000
 	NO_WAIT = 32'b00000000000000000000000000000001
+	SENTENCE = "Demmy's desk!!"
+	SENTENCE_LENGTH = 6'b001110
 	SET_DD_RAM_ADDRESS = 8'b10000000
+	STOP_AND_SHOW_STATE = 8'b00001011
+	STOP_AND_SHOW_WAIT = 32'b00000001011111010111100001000000
 	TRUE = 1'b1
 	Calling function <state_transition>.
+	Calling function <get_char>.
 Module <demmy_disp> is correct for synthesis.
  
 
@@ -181,23 +194,30 @@ Synthesizing Unit <demmy_disp>.
     | Encoding           | automatic                                      |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 10x8-bit ROM for signal <lcd_db>.
+    Found 16x32-bit ROM for signal <wait_time$mux0000>.
+    Found 6-bit up counter for signal <char_index>.
+    Found 4-bit adder for signal <char_pointer_1$addsub0000>.
     Found 32-bit register for signal <clock_count>.
-    Found 32-bit adder for signal <clock_count$share0000> created at line 99.
+    Found 32-bit adder for signal <clock_count$share0000> created at line 132.
     Found 8-bit register for signal <debug_disp>.
+    Found 8-bit 11-to-1 multiplexer for signal <lcd_db>.
+    Found 112-bit shifter logical right for signal <lcd_db$shift0001> created at line 113.
     Found 1-bit register for signal <lcd_e>.
-    Found 32-bit comparator equal for signal <process$cmp_eq0002> created at line 123.
-    Found 32-bit comparator greater for signal <process$cmp_gt0000> created at line 123.
+    Found 32-bit comparator equal for signal <process$cmp_eq0002> created at line 156.
+    Found 32-bit comparator greater for signal <process$cmp_gt0000> created at line 156.
     Found 8-bit register for signal <state>.
-    Found 32-bit comparator lessequal for signal <state$cmp_le0000> created at line 123.
-    Found 32-bit comparator not equal for signal <state$cmp_ne0000> created at line 123.
-    Found 8-bit adder for signal <state_transition$addsub0000> created at line 81.
+    Found 32-bit comparator lessequal for signal <state$cmp_le0000> created at line 156.
+    Found 32-bit comparator not equal for signal <state$cmp_ne0000> created at line 156.
+    Found 8-bit adder for signal <state_transition$addsub0000> created at line 99.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   1 ROM(s).
+	inferred   1 Counter(s).
 	inferred  49 D-type flip-flop(s).
-	inferred   2 Adder/Subtractor(s).
+	inferred   4 Adder/Subtractor(s).
 	inferred   4 Comparator(s).
+	inferred   8 Multiplexer(s).
+	inferred   1 Combinational logic shifter(s).
 Unit <demmy_disp> synthesized.
 
 INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
@@ -207,10 +227,14 @@ HDL Synthesis Report
 
 Macro Statistics
 # ROMs                                                 : 1
- 10x8-bit ROM                                          : 1
-# Adders/Subtractors                                   : 2
+ 16x32-bit ROM                                         : 1
+# Adders/Subtractors                                   : 4
  32-bit adder                                          : 1
+ 4-bit adder                                           : 1
+ 4-bit subtractor                                      : 1
  8-bit adder                                           : 1
+# Counters                                             : 1
+ 6-bit up counter                                      : 1
 # Registers                                            : 4
  1-bit register                                        : 1
  32-bit register                                       : 1
@@ -220,6 +244,10 @@ Macro Statistics
  32-bit comparator greater                             : 1
  32-bit comparator lessequal                           : 1
  32-bit comparator not equal                           : 1
+# Multiplexers                                         : 1
+ 8-bit 11-to-1 multiplexer                             : 1
+# Logic shifters                                       : 1
+ 112-bit shifter logical right                         : 1
 
 =========================================================================
 
@@ -233,8 +261,8 @@ Optimizing FSM <process/FSM> on signal <process[1:2]> with user encoding.
  State | Encoding
 -------------------
  00    | 00
- 10    | 10
  01    | 01
+ 10    | 10
  11    | 11
 -------------------
 
@@ -244,10 +272,14 @@ Advanced HDL Synthesis Report
 Macro Statistics
 # FSMs                                                 : 1
 # ROMs                                                 : 1
- 10x8-bit ROM                                          : 1
-# Adders/Subtractors                                   : 2
+ 16x32-bit ROM                                         : 1
+# Adders/Subtractors                                   : 4
  32-bit adder                                          : 1
+ 4-bit adder                                           : 1
+ 4-bit subtractor                                      : 1
  8-bit adder                                           : 1
+# Counters                                             : 1
+ 6-bit up counter                                      : 1
 # Registers                                            : 49
  Flip-Flops                                            : 49
 # Comparators                                          : 4
@@ -255,6 +287,10 @@ Macro Statistics
  32-bit comparator greater                             : 1
  32-bit comparator lessequal                           : 1
  32-bit comparator not equal                           : 1
+# Multiplexers                                         : 1
+ 8-bit 11-to-1 multiplexer                             : 1
+# Logic shifters                                       : 1
+ 112-bit shifter logical right                         : 1
 
 =========================================================================
 
@@ -267,8 +303,10 @@ Optimizing unit <demmy_disp> ...
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 5) on block demmy_disp, actual ratio is 1.
+FlipFlop state_0 has been replicated 1 time(s)
 FlipFlop state_1 has been replicated 1 time(s)
 FlipFlop state_2 has been replicated 1 time(s)
+FlipFlop state_3 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -276,8 +314,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 53
- Flip-Flops                                            : 53
+# Registers                                            : 61
+ Flip-Flops                                            : 61
 
 =========================================================================
 
@@ -306,25 +344,25 @@ Design Statistics
 # IOs                              : 21
 
 Cell Usage :
-# BELS                             : 248
+# BELS                             : 297
 #      GND                         : 1
 #      INV                         : 2
 #      LUT1                        : 31
-#      LUT2                        : 37
-#      LUT2_D                      : 3
-#      LUT2_L                      : 1
-#      LUT3                        : 6
-#      LUT3_L                      : 1
-#      LUT4                        : 63
-#      LUT4_D                      : 4
-#      LUT4_L                      : 1
-#      MUXCY                       : 60
-#      MUXF5                       : 5
+#      LUT2                        : 40
+#      LUT2_D                      : 2
+#      LUT3                        : 16
+#      LUT3_D                      : 1
+#      LUT3_L                      : 4
+#      LUT4                        : 85
+#      LUT4_D                      : 7
+#      LUT4_L                      : 3
+#      MUXCY                       : 61
+#      MUXF5                       : 11
 #      VCC                         : 1
 #      XORCY                       : 32
-# FlipFlops/Latches                : 53
+# FlipFlops/Latches                : 61
 #      FDC                         : 35
-#      FDCE                        : 10
+#      FDCE                        : 18
 #      FDP                         : 8
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
@@ -338,9 +376,9 @@ Device utilization summary:
 
 Selected Device : 3s700anfgg484-4 
 
- Number of Slices:                       81  out of   5888     1%  
- Number of Slice Flip Flops:             53  out of  11776     0%  
- Number of 4 input LUTs:                149  out of  11776     1%  
+ Number of Slices:                      103  out of   5888     1%  
+ Number of Slice Flip Flops:             61  out of  11776     0%  
+ Number of 4 input LUTs:                191  out of  11776     1%  
  Number of IOs:                          21
  Number of bonded IOBs:                  21  out of    372     5%  
  Number of GCLKs:                         1  out of     24     4%  
@@ -366,7 +404,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-CLOCK_50MHZ                        | BUFGP                  | 53    |
+CLOCK_50MHZ                        | BUFGP                  | 61    |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -374,16 +412,16 @@ Asynchronous Control Signals Information:
 -----------------------------------+------------------------+-------+
 Control Signal                     | Buffer(FF name)        | Load  |
 -----------------------------------+------------------------+-------+
-BUTTON_SOUTH                       | IBUF                   | 53    |
+BUTTON_SOUTH                       | IBUF                   | 61    |
 -----------------------------------+------------------------+-------+
 
 Timing Summary:
 ---------------
 Speed Grade: -4
 
-   Minimum period: 9.340ns (Maximum Frequency: 107.067MHz)
+   Minimum period: 9.657ns (Maximum Frequency: 103.552MHz)
    Minimum input arrival time before clock: No path found
-   Maximum output required time after clock: 9.027ns
+   Maximum output required time after clock: 9.670ns
    Maximum combinational path delay: No path found
 
 Timing Detail:
@@ -392,69 +430,72 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK_50MHZ'
-  Clock period: 9.340ns (frequency: 107.067MHz)
-  Total number of paths / destination ports: 14470 / 63
+  Clock period: 9.657ns (frequency: 103.552MHz)
+  Total number of paths / destination ports: 18988 / 79
 -------------------------------------------------------------------------
-Delay:               9.340ns (Levels of Logic = 13)
-  Source:            state_0 (FF)
+Delay:               9.657ns (Levels of Logic = 15)
+  Source:            state_6 (FF)
   Destination:       clock_count_0 (FF)
   Source Clock:      CLOCK_50MHZ rising
   Destination Clock: CLOCK_50MHZ rising
 
-  Data Path: state_0 to clock_count_0
+  Data Path: state_6 to clock_count_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDCE:C->Q            28   0.591   1.341  state_0 (state_0)
-     LUT2:I1->O            1   0.643   0.452  wait_time<11>1_SW0 (N66)
-     LUT4:I2->O            2   0.648   0.479  wait_time<11>1 (wait_time<11>)
-     LUT4:I2->O            1   0.648   0.000  Mcompar_process_cmp_eq0002_lut<5> (Mcompar_process_cmp_eq0002_lut<5>)
-     MUXCY:S->O            1   0.632   0.000  Mcompar_process_cmp_eq0002_cy<5> (Mcompar_process_cmp_eq0002_cy<5>)
+     FDCE:C->Q            11   0.591   0.936  state_6 (state_6)
+     LUT4_D:I3->O         16   0.648   1.037  process_FSM_FFd2-In111 (N23)
+     LUT4:I3->O            1   0.648   0.423  wait_time<0>2 (wait_time<0>)
+     LUT4:I3->O            1   0.648   0.000  Mcompar_process_cmp_eq0002_lut<3> (Mcompar_process_cmp_eq0002_lut<3>)
+     MUXCY:S->O            1   0.632   0.000  Mcompar_process_cmp_eq0002_cy<3> (Mcompar_process_cmp_eq0002_cy<3>)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<4> (Mcompar_process_cmp_eq0002_cy<4>)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<5> (Mcompar_process_cmp_eq0002_cy<5>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<6> (Mcompar_process_cmp_eq0002_cy<6>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<7> (Mcompar_process_cmp_eq0002_cy<7>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<8> (Mcompar_process_cmp_eq0002_cy<8>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<9> (Mcompar_process_cmp_eq0002_cy<9>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<10> (Mcompar_process_cmp_eq0002_cy<10>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<11> (Mcompar_process_cmp_eq0002_cy<11>)
-     MUXCY:CI->O           4   0.269   0.590  Mcompar_process_cmp_eq0002_cy<12> (Mcompar_process_cmp_eq0002_cy<12>)
-     LUT4_D:I3->O         16   0.648   1.114  lcd_e_mux00001_1 (lcd_e_mux00001)
-     LUT2:I1->O            1   0.643   0.000  clock_count_mux0000<24>1 (clock_count_mux0000<24>)
-     FDC:D                     0.252          clock_count_7
+     MUXCY:CI->O           5   0.269   0.665  Mcompar_process_cmp_eq0002_cy<12> (Mcompar_process_cmp_eq0002_cy<12>)
+     LUT4_D:I2->O         15   0.648   1.097  clock_count_mux0000<0>1 (N0)
+     LUT2:I1->O            1   0.643   0.000  clock_count_mux0000<22>1 (clock_count_mux0000<22>)
+     FDC:D                     0.252          clock_count_9
     ----------------------------------------
-    Total                      9.340ns (5.364ns logic, 3.976ns route)
-                                       (57.4% logic, 42.6% route)
+    Total                      9.657ns (5.499ns logic, 4.158ns route)
+                                       (56.9% logic, 43.1% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK_50MHZ'
-  Total number of paths / destination ports: 49 / 18
+  Total number of paths / destination ports: 101 / 18
 -------------------------------------------------------------------------
-Offset:              9.027ns (Levels of Logic = 3)
-  Source:            state_2 (FF)
+Offset:              9.670ns (Levels of Logic = 4)
+  Source:            state_5 (FF)
   Destination:       LCD_REGISTER_SELECT (PAD)
   Source Clock:      CLOCK_50MHZ rising
 
-  Data Path: state_2 to LCD_REGISTER_SELECT
+  Data Path: state_5 to LCD_REGISTER_SELECT
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDCE:C->Q            23   0.591   1.345  state_2 (state_2)
-     LUT4:I0->O            6   0.648   0.749  Mrom_lcd_db221 (LCD_DATA_BIT_6_OBUF)
-     LUT2:I1->O            3   0.643   0.531  LCD_REGISTER_SELECT1 (LCD_REGISTER_SELECT_OBUF)
+     FDCE:C->Q             7   0.591   0.788  state_5 (state_5)
+     LUT2_D:I1->O          4   0.643   0.590  state_transition_1_state_transition<1>3_SW0 (N56)
+     LUT4_D:I3->O          7   0.648   0.711  state_transition_1_state_transition<1>3 (N24)
+     LUT4:I3->O            3   0.648   0.531  Mcount_char_index_eqn_011 (LCD_REGISTER_SELECT_OBUF)
      OBUF:I->O                 4.520          LCD_REGISTER_SELECT_OBUF (LCD_REGISTER_SELECT)
     ----------------------------------------
-    Total                      9.027ns (6.402ns logic, 2.625ns route)
-                                       (70.9% logic, 29.1% route)
+    Total                      9.670ns (7.050ns logic, 2.620ns route)
+                                       (72.9% logic, 27.1% route)
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 10.00 secs
-Total CPU time to Xst completion: 6.07 secs
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 6.72 secs
  
 --> 
 
 
-Total memory usage is 615040 kilobytes
+Total memory usage is 616920 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

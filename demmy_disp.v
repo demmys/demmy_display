@@ -17,9 +17,15 @@
 
 
 module demmy_disp # (
+    // Constant
     parameter TRUE = 1'b1,
     parameter FALSE = 1'b0,
-    parameter FINAL_STATE = 8'h09,
+    parameter SENTENCE_LENGTH = 6'd14,
+    parameter [SENTENCE_LENGTH*8-1:0] SENTENCE = "Demmy's desk!!",
+    // Special state
+    parameter CHAR_WRITE_STATE = 8'h09,
+    parameter DISPLAY_SHIFT_STATE = 8'h0a,
+    parameter STOP_AND_SHOW_STATE = 8'h0b,
     // Wait time
     parameter NO_WAIT = 32'd1,
     parameter FPGA_CONFIG_WAIT = 32'd750000,
@@ -28,13 +34,15 @@ module demmy_disp # (
     parameter ENABLE_8BIT_WAIT_1 = 32'd205000 - LCD_CONFIG_WAIT,
     parameter ENABLE_8BIT_WAIT_2 = 32'd5000 - LCD_CONFIG_WAIT,
     parameter LCD_PREPARE_WAIT = 32'd82000,
+    parameter STOP_AND_SHOW_WAIT = 32'd25000000,
     // LCD command
     parameter ENABLE_8BIT_CMD = 8'h38,
     parameter FUNCTION_SET_CMD = 8'h38,
-    parameter ENTRY_MODE_CMD = 8'h06,
+    parameter ENTRY_MODE_CMD = 8'h07,
     parameter DISPLAY_CONTROL_CMD = 8'h0c,
     parameter DISPLAY_CLEAR_CMD = 8'h01,
-    parameter SET_DD_RAM_ADDRESS = 8'h80
+    parameter SET_DD_RAM_ADDRESS = 8'h80,
+    parameter CURSOR_AND_DISPLAY_SHIFT = 8'h18
 ) (
     // Clock
     input CLOCK_50MHZ,
@@ -66,6 +74,7 @@ assign LED = debug_disp;
 // Internal register
 reg [7:0] state;
 reg [1:0] process;
+reg [5:0] char_index;
 reg [31:0] clock_count;
 reg [31:0] wait_time;
 
@@ -75,10 +84,33 @@ reg [31:0] wait_time;
 function [7:0] state_transition;
     input [7:0] state;
     begin
-        if (state == FINAL_STATE)
-            state_transition = FINAL_STATE;
+        case (state)
+            CHAR_WRITE_STATE: begin
+                if (char_index == SENTENCE_LENGTH - 1)
+                    state_transition = DISPLAY_SHIFT_STATE;
+                else
+                    state_transition = state;
+            end
+            DISPLAY_SHIFT_STATE:
+                state_transition = STOP_AND_SHOW_STATE;
+            STOP_AND_SHOW_STATE:
+                state_transition = DISPLAY_SHIFT_STATE;
+            default:
+                state_transition = state + 8'b1;
+        endcase
+    end
+endfunction
+
+
+
+// Get character function
+function [7:0] get_char;
+    input [3:0] char_pointer;
+    begin
+        if (char_pointer < 0)
+            get_char = 8'h00;
         else
-            state_transition = state + 8'b1;
+            get_char = SENTENCE >> (char_pointer * 8);
     end
 endfunction
 
@@ -90,7 +122,8 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
 
         // Reset
         state <= 8'b0;
-        process <= 2'b00;
+        process <= 2'b0;
+        char_index <= 6'd0;
         clock_count <= 32'b0;
         lcd_e <= FALSE;
         lcd_rw <= FALSE;
@@ -124,7 +157,8 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
                     // Wait finished
                     state <= state_transition(state);
                     lcd_e <= FALSE;
-                    process <= state == FINAL_STATE ? 2'b00 : 2'b01;
+                    process <= state == STOP_AND_SHOW_STATE ? 2'b00 : 2'b01;
+                    char_index <= state == CHAR_WRITE_STATE ? char_index + 6'd01 : 3'd0;
                     clock_count <= 32'b0;
                 end else clock_count <= clock_count + 32'b1;
             end
@@ -187,16 +221,20 @@ always @(state) begin
             lcd_db <= SET_DD_RAM_ADDRESS | 8'h00;
             wait_time <= NO_WAIT;
         end
-        8'h09: begin
+        CHAR_WRITE_STATE: begin
             lcd_rs <= TRUE;
-            // d
-            lcd_db <= 8'h64; 
+            lcd_db <= get_char(SENTENCE_LENGTH - char_index - 6'd1); 
+            wait_time <= NO_WAIT;
+        end
+        DISPLAY_SHIFT_STATE: begin
+            lcd_rs <= FALSE;
+            lcd_db <= CURSOR_AND_DISPLAY_SHIFT;
             wait_time <= NO_WAIT;
         end
         default: begin
             lcd_rs <= FALSE;
-            lcd_db <= 8'hxx; 
-            wait_time <= NO_WAIT;
+            lcd_db <= 8'hxx;
+            wait_time <= STOP_AND_SHOW_WAIT;
         end
     endcase
 end
@@ -208,7 +246,7 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
     if (BUTTON_SOUTH == TRUE) begin
         debug_disp <= 8'hff;
     end else begin
-        debug_disp <= { process, state[5:0] };
+        debug_disp <= { char_index, state[3:0] };
     end
 end
 

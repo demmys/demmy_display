@@ -1,0 +1,17 @@
+PROMGEN: Xilinx Prom Generator P.20131013
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+promgen -w -p mcs -c FF -o /home/demmys/Documents/demmy_disp//demmy_disp -x xcf04s -u 00000000 /home/demmys/Documents/demmy_disp/demmy_disp.bit 
+
+PROM /home/demmys/Documents/demmy_disp/demmy_disp.prm map: Tue Apr 29 16:55:50 2014
+
+Calculating PROM checksum with fill value ff
+
+Format        Mcs86 (32-bit)
+Size          512K
+PROM start    0000:0000
+PROM end      0007:ffff
+PROM checksum 02ca5ac0
+
+        Addr1        Addr2                     Date File(s)
+    0000:0000    0005:366f     Apr 29 16:53:53 2014 /home/demmys/Documents/demmy_disp/demmy_disp.bit
