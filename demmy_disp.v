@@ -59,8 +59,8 @@ reg lcd_rs;
 assign LCD_REGISTER_SELECT = lcd_rs;
 reg lcd_rw;
 assign LCD_READ_WRITE = lcd_rw;
-reg [7:0] led;
-assign LED = led;
+reg [7:0] debug_disp;
+assign LED = debug_disp;
 
 // Internal register
 reg [7:0] state;
@@ -145,41 +145,49 @@ always @(state) begin
     case (state)
         // LCD Initialize
         8'h00: begin
-            lcd_db <= 8'b0;
             lcd_rs <= FALSE;
+            lcd_db <= 8'b0;
             wait_time <= FPGA_CONFIG_WAIT;
         end
         8'h01: begin
+            lcd_rs <= FALSE;
             lcd_db <= ENABLE_8BIT_CMD;
             wait_time <= ENABLE_8BIT_WAIT_1;
         end
         8'h02: begin
+            lcd_rs <= FALSE;
             lcd_db <= ENABLE_8BIT_CMD;
             wait_time <= ENABLE_8BIT_WAIT_2;
         end
         8'h03: begin
+            lcd_rs <= FALSE;
             lcd_db <= ENABLE_8BIT_CMD;
             wait_time <= NO_WAIT;
         end
         // LCD configuration
         8'h04: begin
+            lcd_rs <= FALSE;
             lcd_db <= FUNCTION_SET_CMD;
             wait_time <= NO_WAIT;
         end
         8'h05: begin
+            lcd_rs <= FALSE;
             lcd_db <= ENTRY_MODE_CMD;
             wait_time <= NO_WAIT;
         end
         8'h06: begin
+            lcd_rs <= FALSE;
             lcd_db <= DISPLAY_CONTROL_CMD;
             wait_time <= NO_WAIT;
         end
         8'h07: begin
+            lcd_rs <= FALSE;
             lcd_db <= DISPLAY_CLEAR_CMD;
             wait_time <= LCD_PREPARE_WAIT;
         end
         // Display characters
         8'h08: begin
+            lcd_rs <= FALSE;
             lcd_db <= SET_DD_RAM_ADDRESS | 8'h00;
             wait_time <= NO_WAIT;
         end
@@ -191,6 +199,12 @@ always @(state) begin
         end
         8'h10: begin
             lcd_rs <= FALSE;
+            lcd_db <= 8'hxx; 
+            wait_time <= NO_WAIT;
+        end
+        default: begin
+            lcd_rs <= FALSE;
+            lcd_db <= 8'hxx; 
             wait_time <= NO_WAIT;
         end
     endcase
@@ -201,9 +215,9 @@ end
 // Debug routine
 always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
     if (BUTTON_SOUTH == TRUE) begin
-        led <= 8'hff;
+        debug_disp <= 8'hff;
     end else begin
-        led <= state;
+        debug_disp <= state;
     end
 end
 

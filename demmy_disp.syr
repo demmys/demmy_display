@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.01 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.01 secs
  
 --> 
 Reading design: demmy_disp.prj
@@ -138,11 +138,6 @@ Analyzing hierarchy for module <demmy_disp> in library <work> with parameters.
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing top module <demmy_disp>.
-WARNING:Xst:863 - "demmy_disp.v" line 44: Name conflict (<lcd_e> and <LCD_E>, renaming lcd_e as lcd_e_rnm0).
-WARNING:Xst:863 - "demmy_disp.v" line 45: Name conflict (<lcd_rs> and <LCD_RS>, renaming lcd_rs as lcd_rs_rnm0).
-WARNING:Xst:863 - "demmy_disp.v" line 46: Name conflict (<lcd_rw> and <LCD_RW>, renaming lcd_rw as lcd_rw_rnm0).
-WARNING:Xst:863 - "demmy_disp.v" line 48: Name conflict (<led> and <LED>, renaming led as led_rnm0).
-WARNING:Xst:863 - "demmy_disp.v" line 43: Name conflict (<lcd_db> and <LCD_DB>, renaming lcd_db as lcd_db_rnm0).
 	DISPLAY_CLEAR_CMD = 8'b00000001
 	DISPLAY_CONTROL_CMD = 8'b00001100
 	ENABLE_8BIT_CMD = 8'b00111000
@@ -167,7 +162,7 @@ Module <demmy_disp> is correct for synthesis.
 =========================================================================
 
 Performing bidirectional port resolution...
-INFO:Xst:2679 - Register <lcd_rw_rnm0> in unit <demmy_disp> has a constant value of 0 during circuit operation. The register is replaced by logic.
+INFO:Xst:2679 - Register <lcd_rw> in unit <demmy_disp> has a constant value of 0 during circuit operation. The register is replaced by logic.
 
 Synthesizing Unit <demmy_disp>.
     Related source file is "demmy_disp.v".
@@ -177,22 +172,17 @@ Synthesizing Unit <demmy_disp>.
     | Transitions        | 8                                              |
     | Inputs             | 4                                              |
     | Outputs            | 3                                              |
-    | Clock              | CLK_50MHZ                 (rising_edge)        |
-    | Reset              | BTN_SOUTH                 (positive)           |
+    | Clock              | CLOCK_50MHZ               (rising_edge)        |
+    | Reset              | BUTTON_SOUTH              (positive)           |
     | Reset type         | asynchronous                                   |
     | Reset State        | 00                                             |
     | Encoding           | automatic                                      |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-WARNING:Xst:737 - Found 32-bit latch for signal <wait_time>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
-WARNING:Xst:737 - Found 1-bit latch for signal <lcd_rs_rnm0>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
-WARNING:Xst:737 - Found 8-bit latch for signal <lcd_db_rnm0>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 10x8-bit ROM for signal <lcd_db>.
     Found 32-bit up counter for signal <clock_count>.
-    Found 1-bit register for signal <lcd_e_rnm0>.
-    Found 8-bit register for signal <led_rnm0>.
+    Found 8-bit register for signal <debug_disp>.
+    Found 1-bit register for signal <lcd_e>.
     Found 32-bit comparator equal for signal <process$cmp_eq0002> created at line 124.
     Found 32-bit comparator greater for signal <process$cmp_gt0000> created at line 124.
     Found 8-bit register for signal <state>.
@@ -201,6 +191,7 @@ INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and 
     Found 8-bit adder for signal <state_transition$addsub0000> created at line 83.
     Summary:
 	inferred   1 Finite State Machine(s).
+	inferred   1 ROM(s).
 	inferred   1 Counter(s).
 	inferred  17 D-type flip-flop(s).
 	inferred   1 Adder/Subtractor(s).
@@ -212,6 +203,8 @@ Unit <demmy_disp> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
+# ROMs                                                 : 1
+ 10x8-bit ROM                                          : 1
 # Adders/Subtractors                                   : 1
  8-bit adder                                           : 1
 # Counters                                             : 1
@@ -219,10 +212,6 @@ Macro Statistics
 # Registers                                            : 3
  1-bit register                                        : 1
  8-bit register                                        : 2
-# Latches                                              : 3
- 1-bit latch                                           : 1
- 32-bit latch                                          : 1
- 8-bit latch                                           : 1
 # Comparators                                          : 4
  32-bit comparator equal                               : 1
  32-bit comparator greater                             : 1
@@ -245,39 +234,20 @@ Optimizing FSM <process/FSM> on signal <process[1:2]> with user encoding.
  10    | 10
  11    | 11
 -------------------
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <31>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <30>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <29>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <28>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <27>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <26>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <25>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <24>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <23>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <22>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <21>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <20>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <18>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <15>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <10>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <2>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <1>. This FF/Latch will be trimmed during the optimization process.
 
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
 # FSMs                                                 : 1
+# ROMs                                                 : 1
+ 10x8-bit ROM                                          : 1
 # Adders/Subtractors                                   : 1
  8-bit adder                                           : 1
 # Counters                                             : 1
  32-bit up counter                                     : 1
 # Registers                                            : 17
  Flip-Flops                                            : 17
-# Latches                                              : 3
- 1-bit latch                                           : 1
- 32-bit latch                                          : 1
- 8-bit latch                                           : 1
 # Comparators                                          : 4
  32-bit comparator equal                               : 1
  32-bit comparator greater                             : 1
@@ -289,20 +259,12 @@ Macro Statistics
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-INFO:Xst:2261 - The FF/Latch <5> in Unit <LPM_LATCH_3> is equivalent to the following FF/Latch, which will be removed : <4> 
-INFO:Xst:2261 - The FF/Latch <19> in Unit <LPM_LATCH_1> is equivalent to the following FF/Latch, which will be removed : <13> 
-INFO:Xst:2261 - The FF/Latch <31> in Unit <LPM_LATCH_1> is equivalent to the following 16 FFs/Latches, which will be removed : <30> <29> <28> <27> <26> <25> <24> <23> <22> <21> <20> <18> <15> <10> <2> <1> 
-WARNING:Xst:1710 - FF/Latch <31> (without init value) has a constant value of 0 in block <LPM_LATCH_1>. This FF/Latch will be trimmed during the optimization process.
-INFO:Xst:2261 - The FF/Latch <wait_time_5> in Unit <demmy_disp> is equivalent to the following FF/Latch, which will be removed : <wait_time_7> 
-INFO:Xst:2261 - The FF/Latch <wait_time_12> in Unit <demmy_disp> is equivalent to the following FF/Latch, which will be removed : <wait_time_17> 
-INFO:Xst:2261 - The FF/Latch <wait_time_3> in Unit <demmy_disp> is equivalent to the following FF/Latch, which will be removed : <wait_time_11> 
 
 Optimizing unit <demmy_disp> ...
 
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 5) on block demmy_disp, actual ratio is 1.
-Latch lcd_db_rnm0_5 has been replicated 1 time(s) to handle iob=true attribute.
 
 Final Macro Processing ...
 
@@ -340,27 +302,27 @@ Design Statistics
 # IOs                              : 21
 
 Cell Usage :
-# BELS                             : 222
+# BELS                             : 216
 #      GND                         : 1
-#      INV                         : 1
+#      INV                         : 2
 #      LUT1                        : 31
-#      LUT2                        : 10
-#      LUT2_D                      : 1
+#      LUT2                        : 2
+#      LUT2_D                      : 3
 #      LUT2_L                      : 2
-#      LUT3                        : 15
-#      LUT3_D                      : 2
-#      LUT3_L                      : 1
-#      LUT4                        : 58
-#      LUT4_D                      : 2
-#      MUXCY                       : 61
-#      MUXF5                       : 4
+#      LUT3                        : 8
+#      LUT3_D                      : 3
+#      LUT3_L                      : 2
+#      LUT4                        : 61
+#      LUT4_D                      : 1
+#      LUT4_L                      : 6
+#      MUXCY                       : 60
+#      MUXF5                       : 1
 #      VCC                         : 1
 #      XORCY                       : 32
-# FlipFlops/Latches                : 71
+# FlipFlops/Latches                : 51
 #      FDC                         : 35
 #      FDCE                        : 8
 #      FDP                         : 8
-#      LD                          : 20
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
 # IO Buffers                       : 20
@@ -373,12 +335,11 @@ Device utilization summary:
 
 Selected Device : 3s700anfgg484-4 
 
- Number of Slices:                       66  out of   5888     1%  
- Number of Slice Flip Flops:             62  out of  11776     0%  
- Number of 4 input LUTs:                123  out of  11776     1%  
+ Number of Slices:                       65  out of   5888     1%  
+ Number of Slice Flip Flops:             51  out of  11776     0%  
+ Number of 4 input LUTs:                121  out of  11776     1%  
  Number of IOs:                          21
  Number of bonded IOBs:                  21  out of    372     5%  
-    IOB Flip Flops:                       9
  Number of GCLKs:                         1  out of     24     4%  
 
 ---------------------------
@@ -399,34 +360,27 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
--------------------------------------------+------------------------+-------+
-Clock Signal                               | Clock buffer(FF name)  | Load  |
--------------------------------------------+------------------------+-------+
-CLK_50MHZ                                  | BUFGP                  | 51    |
-lcd_rs_rnm0_not0001(lcd_rs_rnm0_not00011:O)| NONE(*)(lcd_rs_rnm0)   | 1     |
-lcd_db_rnm0_not0001(wait_time_not000131:O) | NONE(*)(lcd_db_rnm0_0) | 8     |
-wait_time_not0001(wait_time_not00011:O)    | NONE(*)(wait_time_0)   | 11    |
--------------------------------------------+------------------------+-------+
-(*) These 3 clock signal(s) are generated by combinatorial logic,
-and XST is not able to identify which are the primary clock signals.
-Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
-INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK_50MHZ                        | BUFGP                  | 51    |
+-----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
 ----------------------------------------
 -----------------------------------+------------------------+-------+
 Control Signal                     | Buffer(FF name)        | Load  |
 -----------------------------------+------------------------+-------+
-BTN_SOUTH                          | IBUF                   | 51    |
+BUTTON_SOUTH                       | IBUF                   | 51    |
 -----------------------------------+------------------------+-------+
 
 Timing Summary:
 ---------------
 Speed Grade: -4
 
-   Minimum period: 6.407ns (Maximum Frequency: 156.079MHz)
+   Minimum period: 9.728ns (Maximum Frequency: 102.797MHz)
    Minimum input arrival time before clock: No path found
-   Maximum output required time after clock: 5.668ns
+   Maximum output required time after clock: 8.821ns
    Maximum combinational path delay: No path found
 
 Timing Detail:
@@ -434,114 +388,71 @@ Timing Detail:
 All values displayed in nanoseconds (ns)
 
 =========================================================================
-Timing constraint: Default period analysis for Clock 'CLK_50MHZ'
-  Clock period: 6.407ns (frequency: 156.079MHz)
-  Total number of paths / destination ports: 1140 / 59
+Timing constraint: Default period analysis for Clock 'CLOCK_50MHZ'
+  Clock period: 9.728ns (frequency: 102.797MHz)
+  Total number of paths / destination ports: 3548 / 59
 -------------------------------------------------------------------------
-Delay:               6.407ns (Levels of Logic = 19)
-  Source:            clock_count_1 (FF)
-  Destination:       process_FSM_FFd2 (FF)
-  Source Clock:      CLK_50MHZ rising
-  Destination Clock: CLK_50MHZ rising
+Delay:               9.728ns (Levels of Logic = 12)
+  Source:            state_3 (FF)
+  Destination:       state_0 (FF)
+  Source Clock:      CLOCK_50MHZ rising
+  Destination Clock: CLOCK_50MHZ rising
 
-  Data Path: clock_count_1 to process_FSM_FFd2
+  Data Path: state_3 to state_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDC:C->Q              3   0.591   0.563  clock_count_1 (clock_count_1)
-     LUT4:I2->O            1   0.648   0.000  Mcompar_process_cmp_eq0002_lut<0> (Mcompar_process_cmp_eq0002_lut<0>)
-     MUXCY:S->O            1   0.632   0.000  Mcompar_process_cmp_eq0002_cy<0> (Mcompar_process_cmp_eq0002_cy<0>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<1> (Mcompar_process_cmp_eq0002_cy<1>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<2> (Mcompar_process_cmp_eq0002_cy<2>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<3> (Mcompar_process_cmp_eq0002_cy<3>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<4> (Mcompar_process_cmp_eq0002_cy<4>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<5> (Mcompar_process_cmp_eq0002_cy<5>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<6> (Mcompar_process_cmp_eq0002_cy<6>)
+     FDCE:C->Q            28   0.591   1.341  state_3 (state_3)
+     LUT3:I1->O            2   0.643   0.479  wait_time<4>1_SW0_SW0 (N19)
+     LUT4:I2->O           10   0.648   0.885  wait_time<4>1 (wait_time<13>)
+     LUT4:I3->O            1   0.648   0.452  wait_time<4>2 (wait_time<4>)
+     LUT4:I2->O            1   0.648   0.000  Mcompar_process_cmp_eq0002_lut<6> (Mcompar_process_cmp_eq0002_lut<6>)
+     MUXCY:S->O            1   0.632   0.000  Mcompar_process_cmp_eq0002_cy<6> (Mcompar_process_cmp_eq0002_cy<6>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<7> (Mcompar_process_cmp_eq0002_cy<7>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<8> (Mcompar_process_cmp_eq0002_cy<8>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<9> (Mcompar_process_cmp_eq0002_cy<9>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<10> (Mcompar_process_cmp_eq0002_cy<10>)
      MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<11> (Mcompar_process_cmp_eq0002_cy<11>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<12> (Mcompar_process_cmp_eq0002_cy<12>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<13> (Mcompar_process_cmp_eq0002_cy<13>)
-     MUXCY:CI->O           1   0.065   0.000  Mcompar_process_cmp_eq0002_cy<14> (Mcompar_process_cmp_eq0002_cy<14>)
-     MUXCY:CI->O           1   0.269   0.423  Mcompar_process_cmp_eq0002_cy<15> (Mcompar_process_cmp_eq0002_cy<15>)
-     LUT4:I3->O            9   0.648   0.823  state_not00021 (state_not0002)
-     LUT4:I3->O            1   0.648   0.000  process_FSM_FFd2-In (process_FSM_FFd2-In)
-     FDC:D                     0.252          process_FSM_FFd2
+     MUXCY:CI->O           2   0.269   0.450  Mcompar_process_cmp_eq0002_cy<12> (Mcompar_process_cmp_eq0002_cy<12>)
+     LUT4:I3->O            8   0.648   0.757  state_not00021 (state_not0002)
+     FDCE:CE                   0.312          state_0
     ----------------------------------------
-    Total                      6.407ns (4.598ns logic, 1.809ns route)
-                                       (71.8% logic, 28.2% route)
+    Total                      9.728ns (5.364ns logic, 4.364ns route)
+                                       (55.1% logic, 44.9% route)
 
 =========================================================================
-Timing constraint: Default OFFSET OUT AFTER for Clock 'CLK_50MHZ'
-  Total number of paths / destination ports: 9 / 9
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK_50MHZ'
+  Total number of paths / destination ports: 49 / 18
 -------------------------------------------------------------------------
-Offset:              5.558ns (Levels of Logic = 1)
-  Source:            lcd_e_rnm0 (FF)
-  Destination:       LCD_E (PAD)
-  Source Clock:      CLK_50MHZ rising
+Offset:              8.821ns (Levels of Logic = 3)
+  Source:            state_0 (FF)
+  Destination:       LCD_REGISTER_SELECT (PAD)
+  Source Clock:      CLOCK_50MHZ rising
 
-  Data Path: lcd_e_rnm0 to LCD_E
+  Data Path: state_0 to LCD_REGISTER_SELECT
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDC:C->Q              2   0.591   0.447  lcd_e_rnm0 (lcd_e_rnm0)
-     OBUF:I->O                 4.520          LCD_E_OBUF (LCD_E)
+     FDCE:C->Q            27   0.591   1.404  state_0 (state_0)
+     LUT4:I0->O            2   0.648   0.590  Mrom_lcd_db61 (LCD_DATA_BIT_6_OBUF)
+     LUT3:I0->O            1   0.648   0.420  lcd_rs1 (LCD_REGISTER_SELECT_OBUF)
+     OBUF:I->O                 4.520          LCD_REGISTER_SELECT_OBUF (LCD_REGISTER_SELECT)
     ----------------------------------------
-    Total                      5.558ns (5.111ns logic, 0.447ns route)
-                                       (92.0% logic, 8.0% route)
-
-=========================================================================
-Timing constraint: Default OFFSET OUT AFTER for Clock 'lcd_rs_rnm0_not0001'
-  Total number of paths / destination ports: 1 / 1
--------------------------------------------------------------------------
-Offset:              5.668ns (Levels of Logic = 1)
-  Source:            lcd_rs_rnm0 (LATCH)
-  Destination:       LCD_RS (PAD)
-  Source Clock:      lcd_rs_rnm0_not0001 falling
-
-  Data Path: lcd_rs_rnm0 to LCD_RS
-                                Gate     Net
-    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
-    ----------------------------------------  ------------
-     LD:G->Q               1   0.728   0.420  lcd_rs_rnm0 (lcd_rs_rnm0)
-     OBUF:I->O                 4.520          LCD_RS_OBUF (LCD_RS)
-    ----------------------------------------
-    Total                      5.668ns (5.248ns logic, 0.420ns route)
-                                       (92.6% logic, 7.4% route)
-
-=========================================================================
-Timing constraint: Default OFFSET OUT AFTER for Clock 'lcd_db_rnm0_not0001'
-  Total number of paths / destination ports: 8 / 8
--------------------------------------------------------------------------
-Offset:              5.668ns (Levels of Logic = 1)
-  Source:            lcd_db_rnm0_7 (LATCH)
-  Destination:       LCD_DB<7> (PAD)
-  Source Clock:      lcd_db_rnm0_not0001 falling
-
-  Data Path: lcd_db_rnm0_7 to LCD_DB<7>
-                                Gate     Net
-    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
-    ----------------------------------------  ------------
-     LD:G->Q               1   0.728   0.420  lcd_db_rnm0_7 (lcd_db_rnm0_7)
-     OBUF:I->O                 4.520          LCD_DB_7_OBUF (LCD_DB<7>)
-    ----------------------------------------
-    Total                      5.668ns (5.248ns logic, 0.420ns route)
-                                       (92.6% logic, 7.4% route)
+    Total                      8.821ns (6.407ns logic, 2.414ns route)
+                                       (72.6% logic, 27.4% route)
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 7.00 secs
-Total CPU time to Xst completion: 5.80 secs
+Total REAL time to Xst completion: 6.00 secs
+Total CPU time to Xst completion: 5.35 secs
  
 --> 
 
 
-Total memory usage is 615424 kilobytes
+Total memory usage is 614700 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   26 (   0 filtered)
-Number of infos    :   11 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
 

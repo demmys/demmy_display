@@ -1,18 +1,8 @@
 Release 14.7 Drc P.20131013 (lin64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
-Tue Apr 29 11:07:43 2014
+Tue Apr 29 11:33:46 2014
 
 drc -z demmy_disp.ncd demmy_disp.pcf
 
-WARNING:PhysDesignRules:372 - Gated clock. Clock net lcd_db_rnm0_not0001 is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net wait_time_not0001 is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net lcd_rs_rnm0_not0001 is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-DRC detected 0 errors and 3 warnings.  Please see the previously displayed
-individual error or warning messages for more details.
+DRC detected 0 errors and 0 warnings.

@@ -22,6 +22,8 @@
   <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="demmy_disp.xise"/>
 
   <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_CMD" xil_pn:name="_impact.cmd"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="_impact.log"/>
     <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="_ngo"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/bitgen.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/map.xmsgs"/>
@@ -103,10 +105,11 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1398737311" xil_pn:in_ck="5214117562786966831" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-1121994445461143999" xil_pn:start_ts="1398737294">
+    <transform xil_pn:end_ts="1398738792" xil_pn:in_ck="5214117562786966831" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-1121994445461143999" xil_pn:start_ts="1398738783">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="_xmsgs/xst.xmsgs"/>
       <outfile xil_pn:name="demmy_disp.lso"/>
       <outfile xil_pn:name="demmy_disp.ngc"/>
@@ -123,22 +126,20 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1398700422" xil_pn:in_ck="-4679952558634621023" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="-7205173334808427855" xil_pn:start_ts="1398700417">
+    <transform xil_pn:end_ts="1398738799" xil_pn:in_ck="-4679952558634621023" xil_pn:name="TRANEXT_ngdbuild_FPGA" xil_pn:prop_ck="-7205173334808427855" xil_pn:start_ts="1398738792">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="InputChanged"/>
       <outfile xil_pn:name="_ngo"/>
       <outfile xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
       <outfile xil_pn:name="demmy_disp.bld"/>
       <outfile xil_pn:name="demmy_disp.ngd"/>
       <outfile xil_pn:name="demmy_disp_ngdbuild.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1398700430" xil_pn:in_ck="7546355174757908194" xil_pn:name="TRANEXT_map_spartan3" xil_pn:prop_ck="570889668722473129" xil_pn:start_ts="1398700422">
+    <transform xil_pn:end_ts="1398738806" xil_pn:in_ck="7546355174757908194" xil_pn:name="TRANEXT_map_spartan3" xil_pn:prop_ck="570889668722473129" xil_pn:start_ts="1398738799">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="_xmsgs/map.xmsgs"/>
       <outfile xil_pn:name="demmy_disp.pcf"/>
       <outfile xil_pn:name="demmy_disp_map.map"/>
@@ -149,11 +150,9 @@
       <outfile xil_pn:name="demmy_disp_summary.xml"/>
       <outfile xil_pn:name="demmy_disp_usage.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1398700447" xil_pn:in_ck="-5905912155106685893" xil_pn:name="TRANEXT_par_spartan3" xil_pn:prop_ck="-8699727321066641134" xil_pn:start_ts="1398700430">
+    <transform xil_pn:end_ts="1398738823" xil_pn:in_ck="-5905912155106685893" xil_pn:name="TRANEXT_par_spartan3" xil_pn:prop_ck="-8699727321066641134" xil_pn:start_ts="1398738806">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="_xmsgs/par.xmsgs"/>
       <outfile xil_pn:name="demmy_disp.ncd"/>
       <outfile xil_pn:name="demmy_disp.pad"/>
@@ -165,13 +164,9 @@
       <outfile xil_pn:name="demmy_disp_pad.txt"/>
       <outfile xil_pn:name="demmy_disp_par.xrpt"/>
     </transform>
-    <transform xil_pn:end_ts="1398737276" xil_pn:in_ck="-3423148827535024114" xil_pn:name="TRANEXT_bitFile_spartan3a" xil_pn:prop_ck="8242823369169169445" xil_pn:start_ts="1398737255">
+    <transform xil_pn:end_ts="1398738831" xil_pn:in_ck="-3423148827535024114" xil_pn:name="TRANEXT_bitFile_spartan3a" xil_pn:prop_ck="8242823369169169445" xil_pn:start_ts="1398738823">
       <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="_xmsgs/bitgen.xmsgs"/>
       <outfile xil_pn:name="demmy_disp.bgn"/>
       <outfile xil_pn:name="demmy_disp.bit"/>
@@ -181,17 +176,15 @@
       <outfile xil_pn:name="webtalk.log"/>
       <outfile xil_pn:name="webtalk_pn.xml"/>
     </transform>
-    <transform xil_pn:end_ts="1398700459" xil_pn:in_ck="-3423148827535036968" xil_pn:name="TRAN_configureTargetDevice" xil_pn:prop_ck="3725548802311211136" xil_pn:start_ts="1398700458">
+    <transform xil_pn:end_ts="1398738956" xil_pn:in_ck="-3423148827535036968" xil_pn:name="TRAN_configureTargetDevice" xil_pn:prop_ck="3725548802311211136" xil_pn:start_ts="1398738954">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="InputChanged"/>
+      <outfile xil_pn:name="_impact.cmd"/>
+      <outfile xil_pn:name="_impact.log"/>
     </transform>
-    <transform xil_pn:end_ts="1398700447" xil_pn:in_ck="-1459531220324957858" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416186" xil_pn:start_ts="1398700444">
+    <transform xil_pn:end_ts="1398738823" xil_pn:in_ck="-1459531220324957858" xil_pn:name="TRAN_postRouteTrce" xil_pn:prop_ck="445577401284416186" xil_pn:start_ts="1398738820">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="_xmsgs/trce.xmsgs"/>
       <outfile xil_pn:name="demmy_disp.twr"/>
       <outfile xil_pn:name="demmy_disp.twx"/>
