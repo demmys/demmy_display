@@ -25,8 +25,8 @@ module demmy_disp # (
     parameter FPGA_CONFIG_WAIT = 32'd750000,
     parameter LCD_COMMAND_WAIT = 32'd12,
     parameter LCD_CONFIG_WAIT = 32'd2000,
-    parameter ENABLE_8BIT_WAIT_1 = 32'd205000,
-    parameter ENABLE_8BIT_WAIT_2 = 32'd5000,
+    parameter ENABLE_8BIT_WAIT_1 = 32'd205000 - LCD_CONFIG_WAIT,
+    parameter ENABLE_8BIT_WAIT_2 = 32'd5000 - LCD_CONFIG_WAIT,
     parameter LCD_PREPARE_WAIT = 32'd82000,
     // LCD command
     parameter ENABLE_8BIT_CMD = 8'h38,
@@ -99,11 +99,9 @@ always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
         case (process)
             2'b01: begin
                 // Enable command
-                if (clock_count == 32'd1) begin
-                    lcd_e <= TRUE;
-                    process <= 2'b10;
-                    clock_count <= 32'b0;
-                end else clock_count <= clock_count + 32'b1;
+                lcd_e <= TRUE;
+                process <= 2'b10;
+                clock_count <= 32'b0;
             end
             2'b10: begin
                 if (clock_count == LCD_COMMAND_WAIT) begin
@@ -191,8 +189,8 @@ always @(state) begin
         end
         8'h09: begin
             lcd_rs <= TRUE;
-            // D
-            lcd_db <= 8'h44; 
+            // d
+            lcd_db <= 8'h64; 
             wait_time <= NO_WAIT;
         end
         default: begin
