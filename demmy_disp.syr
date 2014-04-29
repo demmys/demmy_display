@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.06 secs
  
 --> 
 Reading design: demmy_disp.prj
@@ -198,22 +198,21 @@ Synthesizing Unit <demmy_disp>.
     Found 6-bit up counter for signal <char_index>.
     Found 4-bit adder for signal <char_pointer_1$addsub0000>.
     Found 32-bit register for signal <clock_count>.
-    Found 32-bit adder for signal <clock_count$share0000> created at line 132.
-    Found 8-bit register for signal <debug_disp>.
+    Found 32-bit adder for signal <clock_count$share0000> created at line 128.
     Found 8-bit 11-to-1 multiplexer for signal <lcd_db>.
-    Found 112-bit shifter logical right for signal <lcd_db$shift0001> created at line 113.
+    Found 112-bit shifter logical right for signal <lcd_db$shift0001> created at line 109.
     Found 1-bit register for signal <lcd_e>.
-    Found 32-bit comparator equal for signal <process$cmp_eq0002> created at line 156.
-    Found 32-bit comparator greater for signal <process$cmp_gt0000> created at line 156.
+    Found 32-bit comparator equal for signal <process$cmp_eq0002> created at line 152.
+    Found 32-bit comparator greater for signal <process$cmp_gt0000> created at line 152.
     Found 8-bit register for signal <state>.
-    Found 32-bit comparator lessequal for signal <state$cmp_le0000> created at line 156.
-    Found 32-bit comparator not equal for signal <state$cmp_ne0000> created at line 156.
-    Found 8-bit adder for signal <state_transition$addsub0000> created at line 99.
+    Found 32-bit comparator lessequal for signal <state$cmp_le0000> created at line 152.
+    Found 32-bit comparator not equal for signal <state$cmp_ne0000> created at line 152.
+    Found 8-bit adder for signal <state_transition$addsub0000> created at line 95.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   1 ROM(s).
 	inferred   1 Counter(s).
-	inferred  49 D-type flip-flop(s).
+	inferred  41 D-type flip-flop(s).
 	inferred   4 Adder/Subtractor(s).
 	inferred   4 Comparator(s).
 	inferred   8 Multiplexer(s).
@@ -235,10 +234,10 @@ Macro Statistics
  8-bit adder                                           : 1
 # Counters                                             : 1
  6-bit up counter                                      : 1
-# Registers                                            : 4
+# Registers                                            : 3
  1-bit register                                        : 1
  32-bit register                                       : 1
- 8-bit register                                        : 2
+ 8-bit register                                        : 1
 # Comparators                                          : 4
  32-bit comparator equal                               : 1
  32-bit comparator greater                             : 1
@@ -280,8 +279,8 @@ Macro Statistics
  8-bit adder                                           : 1
 # Counters                                             : 1
  6-bit up counter                                      : 1
-# Registers                                            : 49
- Flip-Flops                                            : 49
+# Registers                                            : 41
+ Flip-Flops                                            : 41
 # Comparators                                          : 4
  32-bit comparator equal                               : 1
  32-bit comparator greater                             : 1
@@ -314,8 +313,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 61
- Flip-Flops                                            : 61
+# Registers                                            : 53
+ Flip-Flops                                            : 53
 
 =========================================================================
 
@@ -341,7 +340,7 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : No
 
 Design Statistics
-# IOs                              : 21
+# IOs                              : 13
 
 Cell Usage :
 # BELS                             : 297
@@ -360,15 +359,14 @@ Cell Usage :
 #      MUXF5                       : 11
 #      VCC                         : 1
 #      XORCY                       : 32
-# FlipFlops/Latches                : 61
+# FlipFlops/Latches                : 53
 #      FDC                         : 35
 #      FDCE                        : 18
-#      FDP                         : 8
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 20
+# IO Buffers                       : 12
 #      IBUF                        : 1
-#      OBUF                        : 19
+#      OBUF                        : 11
 =========================================================================
 
 Device utilization summary:
@@ -377,10 +375,10 @@ Device utilization summary:
 Selected Device : 3s700anfgg484-4 
 
  Number of Slices:                      103  out of   5888     1%  
- Number of Slice Flip Flops:             61  out of  11776     0%  
+ Number of Slice Flip Flops:             53  out of  11776     0%  
  Number of 4 input LUTs:                191  out of  11776     1%  
- Number of IOs:                          21
- Number of bonded IOBs:                  21  out of    372     5%  
+ Number of IOs:                          13
+ Number of bonded IOBs:                  13  out of    372     3%  
  Number of GCLKs:                         1  out of     24     4%  
 
 ---------------------------
@@ -404,7 +402,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-CLOCK_50MHZ                        | BUFGP                  | 61    |
+CLOCK_50MHZ                        | BUFGP                  | 53    |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -412,7 +410,7 @@ Asynchronous Control Signals Information:
 -----------------------------------+------------------------+-------+
 Control Signal                     | Buffer(FF name)        | Load  |
 -----------------------------------+------------------------+-------+
-BUTTON_SOUTH                       | IBUF                   | 61    |
+BUTTON_SOUTH                       | IBUF                   | 53    |
 -----------------------------------+------------------------+-------+
 
 Timing Summary:
@@ -431,7 +429,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK_50MHZ'
   Clock period: 9.657ns (frequency: 103.552MHz)
-  Total number of paths / destination ports: 18988 / 79
+  Total number of paths / destination ports: 18980 / 71
 -------------------------------------------------------------------------
 Delay:               9.657ns (Levels of Logic = 15)
   Source:            state_6 (FF)
@@ -466,7 +464,7 @@ Delay:               9.657ns (Levels of Logic = 15)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK_50MHZ'
-  Total number of paths / destination ports: 101 / 18
+  Total number of paths / destination ports: 93 / 10
 -------------------------------------------------------------------------
 Offset:              9.670ns (Levels of Logic = 4)
   Source:            state_5 (FF)
@@ -489,13 +487,13 @@ Offset:              9.670ns (Levels of Logic = 4)
 =========================================================================
 
 
-Total REAL time to Xst completion: 7.00 secs
-Total CPU time to Xst completion: 6.72 secs
+Total REAL time to Xst completion: 6.00 secs
+Total CPU time to Xst completion: 6.55 secs
  
 --> 
 
 
-Total memory usage is 616920 kilobytes
+Total memory usage is 616788 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

@@ -1,7 +1,7 @@
 Release 14.7 - par P.20131013 (lin64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
-Tue Apr 29 16:53:32 2014
+Tue Apr 29 17:03:32 2014
 
 
 INFO: The IO information is provided in three file formats as part of the Place and Route (PAR) process.  These formats are:
@@ -172,7 +172,7 @@ Pinout by Pin Number:
 |E18       |                   |          |VCCAUX                |         |           |              |          |         |           |         |3.3      |          |           |                |
 |E19       |                   |          |TDO                   |         |           |              |          |         |           |         |         |          |           |                |
 |E20       |                   |DIFFMLR   |IO_L38P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|E21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |3.30     |          |           |                |
+|E21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |any******|          |           |                |
 |E22       |                   |DIFFMLR   |IO_L41P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |F1        |                   |DIFFSLR   |IO_L12N_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |F2        |                   |DIFFMLR   |IO_L12P_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
@@ -256,7 +256,7 @@ Pinout by Pin Number:
 |J14       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |J15       |                   |DIFFSI_NDT|IP_L43N_1/VREF_1      |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |J16       |                   |DIFFMI_NDT|IP_L43P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|J17       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |3.30     |          |           |                |
+|J17       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |any******|          |           |                |
 |J18       |                   |DIFFMLR   |IO_L37P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |J19       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |J20       |                   |DIFFSLR   |IO_L29N_1/A13         |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
@@ -282,7 +282,7 @@ Pinout by Pin Number:
 |K18       |                   |DIFFSLR   |IO_L32N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |K19       |                   |DIFFSLR   |IO_L25N_1/RHCLK7      |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |K20       |                   |DIFFMLR   |IO_L25P_1/IRDY1/RHCLK6|UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|K21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |3.30     |          |           |                |
+|K21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |any******|          |           |                |
 |K22       |                   |DIFFMLR   |IO_L26P_1/A10         |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |L1        |                   |DIFFSLR   |IO_L22N_3/IRDY2/LHCLK3|UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |L2        |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
@@ -366,11 +366,11 @@ Pinout by Pin Number:
 |P14       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |P15       |                   |DIFFMI_NDT|IP_L08P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |P16       |                   |DIFFSI_NDT|IP_L08N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|P17       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |3.30     |          |           |                |
+|P17       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |any******|          |           |                |
 |P18       |                   |DIFFSLR   |IO_L17N_1/A3          |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |P19       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |P20       |                   |DIFFMLR   |IO_L15P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|P21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |3.30     |          |           |                |
+|P21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |any******|          |           |                |
 |P22       |                   |DIFFSLR   |IO_L15N_1/VREF_1      |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |R1        |                   |DIFFMLR   |IO_L32P_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |R2        |                   |DIFFSLR   |IO_L32N_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
@@ -391,7 +391,7 @@ Pinout by Pin Number:
 |R17       |                   |DIFFMI_NDT|IP_L12P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |R18       |                   |DIFFSI_NDT|IP_L12N_1/VREF_1      |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |R19       |                   |DIFFMLR   |IO_L17P_1/A2          |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|R20       |LED<0>             |IOB       |IO_L13P_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
+|R20       |                   |DIFFMLR   |IO_L13P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |R21       |                   |DIFFMLR   |IO_L14P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |R22       |                   |DIFFSLR   |IO_L14N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |T1        |                   |DIFFMLR   |IO_L36P_3/VREF_3      |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
@@ -412,7 +412,7 @@ Pinout by Pin Number:
 |T16       |                   |IBUF      |IP_2/VREF_2           |UNUSED   |           |2             |          |         |           |         |         |          |           |                |
 |T17       |                   |DIFFMLR   |IO_L03P_1/A0          |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |T18       |                   |DIFFSLR   |IO_L03N_1/A1          |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|T19       |LED<1>             |IOB       |IO_L13N_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
+|T19       |                   |DIFFSLR   |IO_L13N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |T20       |                   |DIFFMLR   |IO_L11P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |T21       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |T22       |                   |DIFFSLR   |IO_L11N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
@@ -434,8 +434,8 @@ Pinout by Pin Number:
 |U16       |                   |          |NC                    |         |           |              |          |         |           |         |         |          |           |                |
 |U17       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |U18       |                   |          |SUSPEND               |         |           |              |          |         |           |         |         |          |           |                |
-|U19       |LED<3>             |IOB       |IO_L10N_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
-|U20       |LED<2>             |IOB       |IO_L10P_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
+|U19       |                   |DIFFSLR   |IO_L10N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
+|U20       |                   |DIFFMLR   |IO_L10P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |U21       |                   |DIFFSLR   |IO_L09N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |U22       |                   |DIFFMLR   |IO_L09P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |V1        |                   |DIFFMLR   |IO_L38P_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
@@ -456,9 +456,9 @@ Pinout by Pin Number:
 |V16       |                   |DIFFSTB   |IO_L31N_2             |UNUSED   |           |2             |          |         |           |         |         |          |           |                |
 |V17       |                   |DIFFSTB   |IO_L33N_2             |UNUSED   |           |2             |          |         |           |         |         |          |           |                |
 |V18       |                   |          |VCCAUX                |         |           |              |          |         |           |         |3.3      |          |           |                |
-|V19       |LED<4>             |IOB       |IO_L06P_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
-|V20       |LED<5>             |IOB       |IO_L06N_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
-|V21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |3.30     |          |           |                |
+|V19       |                   |DIFFMLR   |IO_L06P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
+|V20       |                   |DIFFSLR   |IO_L06N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
+|V21       |                   |          |VCCO_1                |         |           |1             |          |         |           |         |any******|          |           |                |
 |V22       |                   |DIFFSLR   |IO_L07N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |W1        |                   |DIFFMLR   |IO_L42P_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |W2        |                   |DIFFSLR   |IO_L42N_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
@@ -480,7 +480,7 @@ Pinout by Pin Number:
 |W18       |                   |DIFFMTB   |IO_L33P_2             |UNUSED   |           |2             |          |         |           |         |         |          |           |                |
 |W19       |                   |DIFFMLR   |IO_L02P_1/LDC1        |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |W20       |                   |DIFFSLR   |IO_L02N_1/LDC0        |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|W21       |LED<7>             |IOB       |IO_L05N_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
+|W21       |                   |DIFFSLR   |IO_L05N_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |W22       |                   |DIFFMLR   |IO_L07P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |Y1        |                   |DIFFMLR   |IO_L44P_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |Y2        |                   |DIFFSLR   |IO_L44N_3             |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
@@ -503,7 +503,7 @@ Pinout by Pin Number:
 |Y19       |                   |          |DONE                  |         |           |              |          |         |           |         |         |          |           |                |
 |Y20       |                   |          |GND                   |         |           |              |          |         |           |         |         |          |           |                |
 |Y21       |                   |DIFFSLR   |IO_L01N_1/LDC2        |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
-|Y22       |LED<6>             |IOB       |IO_L05P_1             |OUTPUT   |LVTTL      |1             |4         |QUIETIO  |NONE**     |         |         |LOCATED   |NO         |NONE            |
+|Y22       |                   |DIFFMLR   |IO_L05P_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 * Default value.

@@ -52,9 +52,7 @@ module demmy_disp # (
     output [7:0] LCD_DATA_BIT,
     output LCD_ENABLE,
     output LCD_REGISTER_SELECT,
-    output LCD_READ_WRITE,
-    // LED (debug display)
-    output [7:0] LED
+    output LCD_READ_WRITE
 );
 
 
@@ -68,8 +66,6 @@ reg lcd_rs;
 assign LCD_REGISTER_SELECT = lcd_rs;
 reg lcd_rw;
 assign LCD_READ_WRITE = lcd_rw;
-reg [7:0] debug_disp;
-assign LED = debug_disp;
 
 // Internal register
 reg [7:0] state;
@@ -237,17 +233,6 @@ always @(state) begin
             wait_time <= STOP_AND_SHOW_WAIT;
         end
     endcase
-end
-
-
-
-// Debug routine
-always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
-    if (BUTTON_SOUTH == TRUE) begin
-        debug_disp <= 8'hff;
-    end else begin
-        debug_disp <= { char_index, state[3:0] };
-    end
 end
 
 
