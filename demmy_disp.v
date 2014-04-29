@@ -36,14 +36,14 @@ module demmy_disp # (
     parameter SET_DD_RAM_ADDRESS = 8'h80
 ) (
     // Clock
-    input CLK_50MHZ,
+    input CLOCK_50MHZ,
     // Button (reset button)
-    input BTN_SOUTH,
+    input BUTTON_SOUTH,
     // LCD (character display)
-    output [7:0] LCD_DB,
-    output LCD_E,
-    output LCD_RS,
-    output LCD_RW,
+    output [7:0] LCD_DATA_BIT,
+    output LCD_ENABLE,
+    output LCD_REGISTER_SELECT,
+    output LCD_READ_WRITE,
     // LED (debug display)
     output [7:0] LED
 );
@@ -52,13 +52,13 @@ module demmy_disp # (
 
 // Output register
 reg [7:0] lcd_db;
-assign LCD_DB = lcd_db;
+assign LCD_DATA_BIT = lcd_db;
 reg lcd_e;
-assign LCD_E = lcd_e;
+assign LCD_ENABLE = lcd_e;
 reg lcd_rs;
-assign LCD_RS = lcd_rs;
+assign LCD_REGISTER_SELECT = lcd_rs;
 reg lcd_rw;
-assign LCD_RW = lcd_rw;
+assign LCD_READ_WRITE = lcd_rw;
 reg [7:0] led;
 assign LED = led;
 
@@ -88,8 +88,8 @@ endfunction
 
 
 // Reset, consume process or wait routine
-always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
-    if (BTN_SOUTH == TRUE) begin
+always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
+    if (BUTTON_SOUTH == TRUE) begin
 
         // Reset
         state <= 8'b0;
@@ -199,8 +199,8 @@ end
 
 
 // Debug routine
-always @(posedge CLK_50MHZ or posedge BTN_SOUTH) begin
-    if (BTN_SOUTH == TRUE) begin
+always @(posedge CLOCK_50MHZ or posedge BUTTON_SOUTH) begin
+    if (BUTTON_SOUTH == TRUE) begin
         led <= 8'hff;
     end else begin
         led <= state;
